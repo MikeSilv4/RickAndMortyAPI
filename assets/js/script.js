@@ -4,7 +4,7 @@ let pagina = 1;
     // Retorna a tela principal
 function telaPrincipal () {
 
-    resetaCampoDigitacao('Digite ID/NOME(Apos escolher a opreção)');
+    resetaCampoDigitacao('Digite ID/NOME(Após escolher a opreção)');
 
     const codMain = `
         <div class="corpoPersonagens"></div>
