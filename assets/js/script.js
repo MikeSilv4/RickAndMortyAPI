@@ -4,12 +4,16 @@ let pagina = 1;
     // Retorna a tela principal
 function telaPrincipal () {
 
-    resetaCampoDigitacao('Digite ID/NOME(Após escolher a opreção)');
+    resetaCampoDigitacao('Digite ID/NOME (Após escolher a opreção)');
 
     const codMain = `
+    <div class="mx-4" style="height: 170vh; width: 190vh;">
         <div class="corpoPersonagens"></div>
+        <div id="botoesNavegacao" class="position-absolute" style="bottom: -85vh; left: 90vh; "></div>
+    <div>
     `
-    const main = document.getElementById('main'); 
+    const main = document.getElementById('main');
+
     main.innerHTML = codMain; 
 
         // Chama funções complementares, botoes de navegação, renderizar personagens na tela principal e adiciona a função de trocar de tela
@@ -25,17 +29,24 @@ function telaPrincipal () {
     // Botoes referentes a navegação entre as paginas dos personagens
 async function botoesTelaPrincipal( main, codMain ) {
 
-    const mostarOutrosPersonagens = document.querySelector ('.areaBotoesFuncionalidades');
-
-    mostarOutrosPersonagens.innerHTML = `
-    <br><br><br>
-    <button id="restalrar">Restalrar</button>
-    <button id="retornar"><</button><page id="page"></page><div class="separaBotoes"><button id="avancar">></button></div>
+    codMain = `
+    <div class="mx-4" style="height: 170vh; width: 190vh;">
+    <div class="corpoPersonagens"></div>
+        <div id="botoesNavegacao" class="position-absolute" style="bottom: -90vh; left: 90vh;">
+            <button id="retornar" class=""><</button>
+            <button id="restalrar" class="" style="width: 77px; align-text: center;">Restalrar</button>
+            <button id="avancar">></button>
+            <div id="separaBotoes" class="d-flex justify-content-center align-items-center"></div>
+        </div>
+    </div>
     `
+
+    main.innerHTML = codMain;
 
     const retornar = document.getElementById('retornar');
     const atualizar = document.getElementById('avancar');
     const restalrar = document.getElementById('restalrar');
+    const personagens = document.querySelector('.corpoPersonagens');
 
     atualizar.addEventListener('click', async function(){
 
@@ -46,10 +57,10 @@ async function botoesTelaPrincipal( main, codMain ) {
             pagina = 1;
         }
 
-        main.innerHTML = '';
-        main.innerHTML = codMain;
         telaDetalhes = true;
+        personagens.innerHTML = '';
         renderizaPersonagens( pagina );
+
     });
 
     retornar.addEventListener('click', async function(){
@@ -61,17 +72,17 @@ async function botoesTelaPrincipal( main, codMain ) {
             pagina = 42;
         }
 
-        main.innerHTML = '';
-        main.innerHTML = codMain;
         telaDetalhes = true;
+        personagens.innerHTML = '';
         renderizaPersonagens( pagina );
+
     });
 
     restalrar.addEventListener('click', async function(){
 
         pagina = 1;
-        main.innerHTML = codMain;
         telaDetalhes = true;
+        personagens.innerHTML = '';
         renderizaPersonagens( pagina );
         
     });
@@ -90,33 +101,42 @@ async function telaPersonagemId ( tipoOperacao, valor ) {
     const dados = await buildDataPersonagem ( tipoOperacao, valor );
         
         const codMain = `
-                <div class="personagemDetalhes">
-                    <div class="personagemDetalhesIMG">
-                        <img src="${ dados.image }" alt="" id="img">
+                <div id="corpo" class="bg-dark position-relative" style="left: 700px; top: 20px; width: 500px; height: 1900px;">
+                    <div>
+                        <div id="personagemDetalhesIMG" class="pt-5 d-flex justify-content-center align-items-center">
+                        <img src="${ dados.image }" alt="" id="img"></div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h1>${ dados.name }</h1>
+                        </div>
+                        <div class="position-relative mb-3 mt-3" style="left: 100px;">
+                            Estado: ${ dados.status }<br>
+                            Genero: ${ dados.gender }<br>
+                            Especie: ${ dados.species }<br>
+                            Origem: ${ dados.origin.name }<br>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h4>Localização:</h4>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">    
+                            ${ dados.location.name }
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <h3>Episodios de Ocorrencia:</h3>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center" id="personagemDados3"></div>
                     </div>
-                    <div class="personagemDados">
-                        <h1>${ dados.name }</h1>
-                        <titulos>Estado: <textos>${ dados.status }</textos></titulos><br>
-                        <titulos>Genero: <textos>${ dados.gender }</textos></titulos><br>
-                        <titulos>Especie: <textos>${ dados.species }</textos></titulos><br>
-                        <titulos>Origem: <textos>${ dados.origin.name }</textos></titulos><br>
-                    </div>
-                    <div class="personagemDados2">
-                        <titulos>Localização: <br><textos>${ dados.location.name }</textos></titulos><br>
-                        <titulos>Episodios de Ocorrencia:</titulos>
-                    </div>
-                    <div class="personagemDados3"></div>
                 </div>
+            </div>
         `
 
     main.innerHTML = codMain;
 
-    const dadosPersonagem = document.querySelector('.personagemDados3')
+    const dadosPersonagem = document.getElementById('personagemDados3')
     const array = dados.episode; 
     array.forEach(elemento => {
 
         dadosPersonagem.innerHTML += `
-        <links>${elemento}</links><br>
+            ${elemento}<br>
         `
 
     });
@@ -142,20 +162,22 @@ async function telaPersonagemNome( tipoOperacao, valor ) {
     const main = document.getElementById ('main');
 
         // Limpa ta TAG main
-    main.innerHTML = '';
+    main.innerHTML = '<div id="corpo" class="mx-4" style="height: 200vh; width: 190vh;"></div>';
+
+    const elementosTela = document.getElementById('corpo');
 
     ocorrencias.forEach( ocorrencia => {
 
-        main.innerHTML += `
-        <div class="conteinerPersonagemNome">
+        elementosTela.innerHTML += `
+        <div id="conteinerPersonagemNome" class="ml-4 mt-3 mb-3 pl-3 pr-3 pt-3 pb-3 float-left bg-dark">
             <img alt="" src="${ocorrencia.image}">
             <div class="personagemNomeDados">
-                <h1>${ocorrencia.name}</h1>
-                <titulos>ID: <textos>${ocorrencia.id}</textos></titulos><br>
-                <titulos>Status: <textos>${ocorrencia.status}</textos></titulos><br>
+                <div class="d-flex justify-content-center align-items-center">${ocorrencia.name}</div>
+                ID: ${ocorrencia.id}<br>
+                Status: ${ocorrencia.status}<br>
             </div>
             <div class="personagemNomeDados2">
-                <titulos>Localização: <br><textos>${ocorrencia.location.name}</textos></titulos><br>
+                Localização: ${ocorrencia.location.name}<br>
             </div>
         </div>
         `
@@ -271,7 +293,7 @@ async function renderizaPersonagens( pagina ) {
 
     if (telaDetalhes) {
 
-        const page = document.getElementById('page');
+        const page = document.getElementById('separaBotoes');
         const conteinerPersonagens = document.querySelector('.corpoPersonagens');
 
         page.innerHTML = `
@@ -283,19 +305,19 @@ async function renderizaPersonagens( pagina ) {
             personagens.forEach (( personagem ) => {
 
                 return conteinerPersonagens.innerHTML += `
-                <div class="personagem">
+                <div class="ml-4 mt-3 mb-3 pl-3 pr-3 pt-3 pb-3 float-left bg-dark">
                     <img src="${personagem.image}" alt="" />
-                    <div class="principalNome">${personagem.name}</div>
+                    <div class="d-flex justify-content-center align-items-center">${personagem.name}</div>
                 </div>
                 `;
-            })
+            });
 
         }
 
         async function mostraPersonagens() {
 
-            const personagens = await builDataPersonagens(pagina);
-
+            const personagens = await builDataPersonagens( pagina );
+            console.log(pagina);
             renderiza({personagens});
 
         }
@@ -310,10 +332,10 @@ async function renderizaPersonagens( pagina ) {
     // Adiciona um botao que tem a finalidade de "retornar a tela principal"
 async function botaoVoltar () {
 
-    const voltar = document.querySelector ('.areaBotoesFuncionalidades');
+    const voltar = document.getElementById ('areaBotoesFuncionalidades');
 
     voltar.innerHTML = `
-    <button id="voltar">Voltar</button>
+        <button class="" id="voltar">Voltar</button>
     `
 
     const botao = document.getElementById('voltar');

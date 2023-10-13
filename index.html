@@ -12,36 +12,38 @@
 
             <!-- Difinição do menu -->
 
-            <div class="p-3 mb-2 bg-dark text-white">
+            <div class="p-5 bg-dark text-white">
 
-                <div class="titulo">
-                    Rick and Morty - Characters
+                <div class="d-flex justify-content-center">
+                    <h1>Rick and Morty - Characters</h1>
                 </div>
 
-                <div class="menu">
+                <div class="d-flex justify-content-center">
 
-                    <div class="areaBotoesFuncionalidades"></div>
-                    <form id="formulario" action="" method="post">
-                        <select id="tipoBusca">
+                    <div id="areaBotoesFuncionalidades" class="position-absolute"></div>
+                    <div class="justify-content-xl-around pt-5">
 
-                            <option value="1">Id</option>
-                            <option value="2">Nome</option>
+                        <form id="formulario" action="" method="post">
+                            <select id="tipoBusca">
+    
+                                <option value="1">Id</option>
+                                <option value="2">Nome</option>
+    
+                            </select>
+    
+                            <input type="text" id="campoTexto" placeholder="Digite ID/NAME" size="40" maxlength="150" required>
+                            <input type="submit" id="submitButton" value="Procurar">
 
-                        </select>
-
-                        <input type="text" id="campoTexto" placeholder="Digite ID/NAME" size="40" maxlength="150" required>
-                        <input type="submit" id="submitButton" value="Procurar">
+                    </div>
 
                     </form>
                 </div>
 
-                <div class="separador">
-                    <hr> 
-                </div>
-
             </div>
-
-        <main id="main"></main>
+        <div class="bg-secondary text-white" style="width: 100%; height: 220vh;">
+            <main id="main"></main>
+        </div>
+        
         <script src="./assets/js/script.js"></script>
 
     </body>
