@@ -4,7 +4,7 @@ let pagina = 1;
     // Retorna a tela principal
 function telaPrincipal () {
 
-    resetaCampoDigitacao('Digite ID/NOME (Após escolher a opreção)');
+    resetaCampoDigitacao('Digite ID/NOME (Após escolher a operação)');
 
     const codMain = `
     <div class="mx-4" style="height: 170vh; width: 190vh;">
@@ -93,6 +93,13 @@ async function botoesTelaPrincipal( main, codMain ) {
 async function telaPersonagemId ( tipoOperacao, valor ) {
 
     const main = document.getElementById ('main');
+    const titulo = document.getElementById ('titulo')
+
+    titulo.innerHTML = `                  
+    <div class="w-75" style="margin-left: 650px;">
+        <h1>Rick and Morty - Characters</h1>
+    </div>
+    `
 
         // Limpa ta TAG main
     main.innerHTML = '';
@@ -215,7 +222,7 @@ function tipoOperacao(){
 
             } else {
 
-                const mensagem = 'Digite ID/NOME';
+                const mensagem = 'Digite ID/NOME (Após escolher a operação)';
                 resetaCampoDigitacao(mensagem);
                 telaPersonagemId( tipoOperacao, valor );
 
@@ -225,7 +232,7 @@ function tipoOperacao(){
 
             if ( isNaN(valor) ) {
 
-                const mensagem = 'Digite ID/NOME';
+                const mensagem = 'Digite ID/NOME (Após escolher a operação)';
                 resetaCampoDigitacao(mensagem);
                 telaPersonagemNome( tipoOperacao, valor );
 
@@ -335,7 +342,7 @@ async function botaoVoltar () {
     const voltar = document.getElementById ('areaBotoesFuncionalidades');
 
     voltar.innerHTML = `
-        <button class="" id="voltar">Voltar</button>
+            <button id="voltar" class="btn btn-light">Voltar</button>
     `
 
     const botao = document.getElementById('voltar');
